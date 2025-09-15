@@ -69,9 +69,9 @@ jobs:
         if git diff --exit-code --no-index ${{ github.event.before }} \
           ${{ github.sha }} -- 'ci/build_iso.sh'
         then
-          echo "rebuild=true" >> $GITHUB_OUTPUT
+          echo "rebuild=false" >> ${GITHUB_OUTPUT}
         else
-          echo "rebuild=false" >> $GITHUB_OUTPUT
+          echo "rebuild=true" >> ${GITHUB_OUTPUT}
         fi
     - name: Build web app
       if: steps.changes.outputs.rebuild == 'true'
