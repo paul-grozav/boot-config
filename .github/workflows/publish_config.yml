@@ -7,6 +7,7 @@ name: Publish config files
 on:
   push:
     paths:
+    - .github/workflows/publish_config.yml
     - 'http/**'
     branches:
     - main
