@@ -39,6 +39,8 @@ jobs:
     container:
       image: alpine:latest
     steps:
+    # Must install git before checkout, otherwise .git folder is missing and
+    # will just use REST API (download .zip of repo)
     - name: Install tools
       run: |
         set -x &&
@@ -52,9 +54,9 @@ jobs:
         true
     - name: Checkout
       uses: actions/checkout@v4
-      # with:
+      with:
         # Fetches the entire history for git diff - not a shallow clone
-        # fetch-depth: 0
+        fetch-depth: 0
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Detect if build.sh has changed
@@ -62,10 +64,10 @@ jobs:
       run: |
         set -x &&
         pwd && ls -la &&
-        if git diff-tree --no-commit-id --name-only -r ${{ github.sha }} |
-          grep "^ci/build_iso.sh$\|^ci/embedded.ipxe$"
-        # if git diff --exit-code --no-index ${{ github.event.before }} \
-        #   ${{ github.sha }} -- 'ci/build_iso.sh'
+        # if git diff-tree --no-commit-id --name-only -r ${{ github.sha }} |
+        #   grep "^ci/build_iso.sh$\|^ci/embedded.ipxe$"
+        if git diff --exit-code --no-index ${{ github.event.before }} \
+          ${{ github.sha }} -- 'ci/build_iso.sh'
         then
           echo "rebuild=true" >> $GITHUB_OUTPUT
         else
