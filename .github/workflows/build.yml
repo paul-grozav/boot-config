@@ -64,6 +64,7 @@ jobs:
       run: |
         set -x &&
         pwd && ls -la &&
+        git config --global --add safe.directory '*' &&
         git status &&
         # if git diff-tree --no-commit-id --name-only -r ${{ github.sha }} |
         #   grep "^ci/build_iso.sh$\|^ci/embedded.ipxe$"
