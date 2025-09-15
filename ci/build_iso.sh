@@ -1,3 +1,4 @@
+#!/bin/bash
 # ============================================================================ #
 # Author: Tancredi-Paul Grozav <paul@grozav.info>
 # ============================================================================ #
@@ -5,7 +6,7 @@ set -x &&
 script_dir="$( cd $( dirname ${0} ) && pwd )" &&
 project_root="$( cd ${script_dir}/.. && pwd )" &&
 
-apk add \
+apt-get install -y \
   ` # git - clone ipxe project ` \
   git \
   ` # perl - required for building ipxe ` \

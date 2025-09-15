@@ -40,32 +40,30 @@ jobs:
     # runs-on: self-hosted
     # Uses a free GitHub runner
     runs-on: ubuntu-latest
-    container:
-      image: alpine:latest
     steps:
     # Must install git before checkout, otherwise .git folder is missing and
     # will just use REST API (download .zip of repo)
-    - name: Install tools
-      run: |
-        set -x &&
-        apk add --no-cache \
-          ` # tar - to create the artifact ` \
-          tar \
-          &&
-        true
+    # - name: Install tools
+    #   run: |
+    #     set -x &&
+    #     apk add --no-cache \
+    #       ` # tar - to create the artifact ` \
+    #       tar \
+    #       &&
+    #     true
     - name: Checkout
       uses: actions/checkout@v4
     - name: Build .iso file
-      run: sh ci/build_iso.sh
-    - name: Install gh api cli
-      run: |
-        apk add --no-cache curl jq
-        curl -sSL https://github.com/cli/cli/releases/latest/download/gh_$(\
-          uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/'\
-          )_linux_$(\
-          uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64').tar.gz \
-          | tar -xz -C /tmp &&
-        cp /tmp/gh*/bin/gh /usr/local/bin/
+      run: bash ci/build_iso.sh
+    # - name: Install gh api cli
+    #   run: |
+    #     apk add --no-cache curl jq
+    #     curl -sSL https://github.com/cli/cli/releases/latest/download/gh_$(\
+    #       uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/'\
+    #       )_linux_$(\
+    #       uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64').tar.gz \
+    #       | tar -xz -C /tmp &&
+    #     cp /tmp/gh*/bin/gh /usr/local/bin/
     - name: Create new release with ISO
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
