@@ -6,26 +6,26 @@ set -x &&
 script_dir="$( cd $( dirname ${0} ) && pwd )" &&
 project_root="$( cd ${script_dir}/.. && pwd )" &&
 
-sudo apt-get install -y \
-  ` # git - clone ipxe project ` \
-  git \
-  ` # perl - required for building ipxe ` \
-  perl \
-  ` # make - Build system for the ipxe project ` \
-  make \
-  ` # gcc - Compiler to build the ipxe C code ` \
-  gcc \
-  ` # libc-dev - Basic standard C library for ipxe ` \
-  libc-dev \
-  ` # xz-dev - (Alpine) required by the ipxe project ` \
-  ` # xz-dev ` \
-  ` # liblzma-dev - (ubuntu) required by the ipxe project ` \
-  liblzma-dev \
-  ` # syslinux - required to make the iso bootable ` \
-  syslinux \
-  ` # xorriso - to create the iso file ` \
-  xorriso \
-  &&
+# sudo apt-get install -y \
+#   ` # git - clone ipxe project ` \
+#   ` # git ` \
+#   ` # perl - required for building ipxe ` \
+#   perl \
+#   ` # make - Build system for the ipxe project ` \
+#   make \
+#   ` # gcc - Compiler to build the ipxe C code ` \
+#   gcc \
+#   ` # libc-dev - Basic standard C library for ipxe ` \
+#   libc-dev \
+#   ` # xz-dev - (Alpine) required by the ipxe project ` \
+#   ` # xz-dev ` \
+#   ` # liblzma-dev - (ubuntu) required by the ipxe project ` \
+#   liblzma-dev \
+#   ` # syslinux - required to make the iso bootable ` \
+#   syslinux \
+#   ` # xorriso - to create the iso file ` \
+#   xorriso \
+#   &&
 
 git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 
