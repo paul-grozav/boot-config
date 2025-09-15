@@ -89,7 +89,7 @@ jobs:
         name: latest-iso
         path: http
         # The run-id of the workflow that builds the ISO
-        run-id: latest
+        run-id: latest_successful
         # A token to authenticate and download the artifact
         github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Upload static files as artifact
