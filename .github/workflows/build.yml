@@ -59,7 +59,7 @@ jobs:
       run: |
         set -x &&
         pwd && ls -la &&
-        if git diff --exit-code ${{ github.event.before }} \
+        if git diff --exit-code --no-index ${{ github.event.before }} \
           ${{ github.sha }} -- 'ci/build_iso.sh'
         then
           echo "rebuild=false" >> $GITHUB_OUTPUT
