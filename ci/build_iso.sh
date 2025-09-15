@@ -6,8 +6,6 @@ script_dir="$( cd $( dirname ${0} ) && pwd )" &&
 project_root="$( cd ${script_dir}/.. && pwd )" &&
 
 apk add \
-  ` # git - clone ipxe project ` \
-  git \
   ` # perl - required for building ipxe ` \
   perl \
   ` # make - Build system for the ipxe project ` \
@@ -22,8 +20,6 @@ apk add \
   syslinux \
   ` # xorriso - to create the iso file ` \
   xorriso \
-  ` # tar - to create the artifact ` \
-  tar \
   &&
 
 git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
