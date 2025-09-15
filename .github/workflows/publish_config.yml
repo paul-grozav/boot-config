@@ -50,33 +50,33 @@ jobs:
         true
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Download latest ISO from Releases
-      run: |
-        # Get latest release download URL for ipxe.iso
-        url=$(gh release view --json assets \
-          --jq '.assets[] | select(.name=="ipxe.iso") | .url') &&
-        echo "Downloading ${url}" &&
-        gh api "${url}" \
-          --method GET \
-          --header "Accept: application/octet-stream" \
-          > http/ipxe.iso \
-          &&
-        true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Download latest ISO from Releases
+    #   run: |
+    #     # Get latest release download URL for ipxe.iso
+    #     url=$(gh release view --json assets \
+    #       --jq '.assets[] | select(.name=="ipxe.iso") | .url') &&
+    #     echo "Downloading ${url}" &&
+    #     gh api "${url}" \
+    #       --method GET \
+    #       --header "Accept: application/octet-stream" \
+    #       > http/ipxe.iso \
+    #       &&
+    #     true
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Setup Pages
       uses: actions/configure-pages@v5
-    # - name: Upload static files as artifact
-    #   id: deployment
-    #   uses: actions/upload-pages-artifact@v4
-    #   with:
-    #     path: http
-    #     retention-days: 1
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
+    - name: Upload static files as artifact
+      id: deployment
+      uses: actions/upload-pages-artifact@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./http
+        path: http
+        retention-days: 1
+    # - name: Deploy to GitHub Pages
+    #   uses: peaceiris/actions-gh-pages@v4
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./http
 
   # Deployment job
   deploy:
