@@ -65,26 +65,32 @@ jobs:
     #       uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64').tar.gz \
     #       | tar -xz -C /tmp &&
     #     cp /tmp/gh*/bin/gh /usr/local/bin/
-    - name: Create new release with ISO
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        tag="iso-$(date +%Y%m%d%H%M)"
-        gh release create "${tag}" ./http/ipxe.iso \
-          --title "ISO build ${tag}" \
-          --notes "Automated ISO build at $(date -u)"
+    # - name: Create new release with ISO
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   run: |
+    #     tag="iso-$(date +%Y%m%d%H%M)"
+    #     gh release create "${tag}" ./http/ipxe.iso \
+    #       --title "ISO build ${tag}" \
+    #       --notes "Automated ISO build at $(date -u)"
 
-    - name: Delete old releases (keep latest 3)
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        gh release list --limit 100 --json tagName,createdAt \
-          --jq 'sort_by(.createdAt) | reverse | .[3:] | .[].tagName' |
-          while read tag
-          do
-            echo "Deleting old release: ${tag}"
-            gh release delete "${tag}" --yes
-            git tag -d "${tag}" || true
-            git push origin ":refs/tags/${tag}" || true
-          done
+    # - name: Delete old releases (keep latest 3)
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   run: |
+    #     gh release list --limit 100 --json tagName,createdAt \
+    #       --jq 'sort_by(.createdAt) | reverse | .[3:] | .[].tagName' |
+    #       while read tag
+    #       do
+    #         echo "Deleting old release: ${tag}"
+    #         gh release delete "${tag}" --yes
+    #         git tag -d "${tag}" || true
+    #         git push origin ":refs/tags/${tag}" || true
+    #       done
+    - name: Upload static files as artifact
+      id: deployment
+      uses: actions/upload-pages-artifact@v4
+      with:
+        path: http
+        retention-days: 1
 # ============================================================================ #
