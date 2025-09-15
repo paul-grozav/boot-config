@@ -32,15 +32,19 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 # nano config/console.h # uncomment CONSOLE_SERIAL if you need it.
 
 # See: https://ipxe.org/appnote/buildtargets
+
+curl https://letsencrypt.org/certs/lets-encrypt-r3.pem \
+  -o ${project_root}/le-r3.pem &&
 # Make .iso
 (
   cd ${project_root}/ipxe/src &&
   make \
     -j$(nproc) \
-    DEBUG=dhcp,tftp,http \
+    DEBUG=dhcp,tftp,http,tls,x509:3,certstore,privkey \
+    TRUST=${project_root}/le-r3.pem \
+    EMBED=${project_root}/ci/embedded.ipxe \
     ` # This needs to be a relative path, as defined in Makefile ` \
     bin/ipxe.iso \
-    EMBED=${project_root}/ci/embedded.ipxe \
     &&
   # mkdir -p ./bin && touch ./bin/ipxe.iso &&
   true

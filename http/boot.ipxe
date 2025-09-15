@@ -2,9 +2,6 @@
 # ============================================================================ #
 # Author: Tancredi-Paul Grozav <paul@grozav.info>
 # ============================================================================ #
-echo Starting the iPXE script that is embeded into the .iso ...
-ifstat
-dhcp
-# To do: retry chain
-chain http://paul-grozav.github.io/boot-config/boot.ipxe || shell
+echo Starting the entrypoint iPXE script from central server ...
+shell
 # ============================================================================ #
