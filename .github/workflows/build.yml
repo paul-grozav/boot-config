@@ -83,13 +83,25 @@ jobs:
       with:
         name: latest-iso
         path: ipxe/src/bin/ipxe.iso
+    - name: Find latest successful run ID with ISO artifact
+      id: find_run
+      uses: peter-evans/find-workflow-run@v2
+      with:
+        workflow: 'Build'
+        branch: main
+        event: push
+        status: success
+        # search only for a successful workflow run that actually contains the
+        # latest-iso artifact
+        artifact-name: latest-iso
     - name: Download latest ISO artifact
       uses: actions/download-artifact@v4
       with:
         name: latest-iso
         path: http
         # The run-id of the workflow that builds the ISO
-        run-id: latest_successful
+        # run-id: latest_successful
+        run-id: ${{ steps.find_run.outputs.run-id }}
         # A token to authenticate and download the artifact
         github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Upload static files as artifact
