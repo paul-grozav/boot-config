@@ -51,22 +51,17 @@ jobs:
         apk add --no-cache \
           ` # tar - to create the artifact ` \
           tar \
-          ` # git - clone ipxe project ` \
-          git \
           &&
-        git --version &&
         true
     - name: Checkout
       uses: actions/checkout@v4
-      with:
-        # Fetches the entire history for git diff - not a shallow clone
-        fetch-depth: 0
     - name: Build .iso file
       run: sh ci/build_iso.sh
     - name: Upload static files as artifact
-      id: deployment
       uses: actions/upload-pages-artifact@v4
       with:
-        path: ipxe/src/bin/ipxe.iso
         retention-days: 1
+        path: |
+          ipxe/src/bin/ipxe.lkrn
+          ipxe/src/bin/ipxe.iso
 # ============================================================================ #
