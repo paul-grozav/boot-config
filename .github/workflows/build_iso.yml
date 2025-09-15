@@ -57,16 +57,26 @@ jobs:
       uses: actions/checkout@v4
     - name: Build .iso file
       run: sh ci/build_iso.sh
-    # - name: Upload static files as artifact
-    #   uses: actions/upload-pages-artifact@v4
-    #   with:
-    #     retention-days: 1
-    #     path: |
-    #       ipxe/src/bin/ipxe.lkrn
-    #       ipxe/src/bin/ipxe.iso
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./http
+    - name: Create new release with ISO
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        tag="iso-$(date +%Y%m%d%H%M)"
+        gh release create "${tag}" ./http/ipxe.iso \
+          --title "ISO build ${tag}" \
+          --notes "Automated ISO build at $(date -u)"
+
+    - name: Delete old releases (keep latest 3)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        gh release list --limit 100 --json tagName,createdAt \
+          --jq 'sort_by(.createdAt) | reverse | .[3:] | .[].tagName' |
+          while read tag
+          do
+            echo "Deleting old release: ${tag}"
+            gh release delete "${tag}" --yes
+            git tag -d "${tag}" || true
+            git push origin ":refs/tags/${tag}" || true
+          done
 # ============================================================================ #
