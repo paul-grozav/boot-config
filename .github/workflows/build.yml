@@ -74,7 +74,7 @@ jobs:
         else
           echo "rebuild=true" >> ${GITHUB_OUTPUT}
         fi
-    - name: Build web app
+    - name: Build .iso file
       if: steps.changes.outputs.rebuild == 'true'
       run: sh ci/build_iso.sh
     - name: Upload new ISO as an artifact
@@ -89,7 +89,7 @@ jobs:
         name: latest-iso
         path: http
         # The run-id of the workflow that builds the ISO
-        run-id: ${{ github.run_id }}
+        run-id: latest
         # A token to authenticate and download the artifact
         github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Upload static files as artifact
