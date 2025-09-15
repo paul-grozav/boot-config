@@ -41,7 +41,7 @@ jobs:
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Build web app
-      run: sh build.sh
+      run: sh ci/build.sh
     - name: Upload static files as artifact
       id: deployment
       uses: actions/upload-pages-artifact@v3
