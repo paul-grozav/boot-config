@@ -48,6 +48,7 @@ jobs:
       uses: actions/configure-pages@v5
     - name: Install tools
       run: |
+        set -x &&
         apk add --no-cache \
         ` # tar - to create the artifact ` \
         tar \
@@ -56,8 +57,10 @@ jobs:
     - name: Detect if build.sh has changed
       id: changes
       run: |
+        set -x &&
+        pwd && ls -la &&
         if git diff --exit-code ${{ github.event.before }} \
-          ${{ github.sha }} -- 'ci/build.sh'
+          ${{ github.sha }} -- 'ci/build_iso.sh'
         then
           echo "rebuild=false" >> $GITHUB_OUTPUT
         else
