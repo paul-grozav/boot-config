@@ -58,7 +58,7 @@ jobs:
       run: sh ci/build_iso.sh
     - name: Upload new ISO as an artifact
       if: steps.changes.outputs.rebuild == 'true'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: latest-iso
         path: ipxe/src/bin/ipxe.iso
