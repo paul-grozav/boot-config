@@ -41,7 +41,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-      with:
+      # with:
         # Fetches the entire history for git diff - not a shallow clone
         # fetch-depth: 0
     - name: Setup Pages
