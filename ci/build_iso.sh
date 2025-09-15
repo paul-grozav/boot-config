@@ -19,8 +19,8 @@ sudo apt-get install -y \
   libc-dev \
   ` # xz-dev - (Alpine) required by the ipxe project ` \
   ` # xz-dev ` \
-  ` # liblzma-dev - (ubuntu) required by the ipxe project ` \
-  liblzma-dev \
+  ` # liblzma-dev - (ubuntu) (and isolinux) required by the ipxe project ` \
+  liblzma-dev isolinux \
   ` # syslinux - required to make the iso bootable ` \
   syslinux \
   ` # xorriso - to create the iso file ` \
