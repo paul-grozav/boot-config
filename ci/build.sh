@@ -5,11 +5,28 @@ set -x &&
 script_dir="$( cd $( dirname ${0} ) && pwd )" &&
 project_root="$( cd ${script_dir}/.. && pwd )" &&
 
-apk add git perl make gcc libc-dev xz-dev syslinux xorriso &&
-pwd && ls -la ${project_root} &&
+apk add \
+  ` # git - clone ipxe project ` \
+  git \
+  ` # perl - required for building ipxe ` \
+  perl \
+  ` # make - Build system for the ipxe project ` \
+  make \
+  ` # gcc - Compiler to build the ipxe C code ` \
+  gcc \
+  ` # libc-dev - Basic standard C library for ipxe ` \
+  libc-dev \
+  ` # xz-dev - required by the ipxe project ` \
+  xz-dev \
+  ` # syslinux - required to make the iso bootable ` \
+  syslinux \
+  ` # xorriso - to create the iso file ` \
+  xorriso \
+  ` # tar - to create the artifact ` \
+  tar \
+  &&
+
 git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
-pwd && ls -la ${project_root} && ls -la ${project_root}/ipxe &&
-ls -la ${project_root}/ipxe/src &&
 
 # nano config/console.h # uncomment CONSOLE_SERIAL if you need it
 
