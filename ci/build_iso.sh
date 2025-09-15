@@ -24,7 +24,7 @@ apk add \
 
 git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 
-# nano config/console.h # uncomment CONSOLE_SERIAL if you need it
+# nano config/console.h # uncomment CONSOLE_SERIAL if you need it.
 
 # Make all (default config)
 # make &&
