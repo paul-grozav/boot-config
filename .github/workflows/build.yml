@@ -63,6 +63,7 @@ jobs:
       id: changes
       run: |
         set -x &&
+        pwd && ls -la &&
         # if git diff-tree --no-commit-id --name-only -r ${{ github.sha }} |
         #   grep "^ci/build_iso.sh$\|^ci/embedded.ipxe$"
         if git diff --exit-code ${{ github.event.before }} ${{ github.sha }} \
