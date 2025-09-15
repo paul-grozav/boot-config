@@ -46,7 +46,7 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
   #   bin/ipxe.iso \
   #   EMBED=${project_root}/ci/embedded.ipxe \
   #   &&
-  mkdir ../bin && touch ../bin/ipxe.iso &&
+  mkdir -p ./bin && touch ./bin/ipxe.iso &&
   true
 )
 
