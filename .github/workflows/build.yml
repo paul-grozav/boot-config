@@ -63,9 +63,8 @@ jobs:
       id: changes
       run: |
         set -x &&
-        pwd && ls -la &&
+        # This safe dir avoids: fatal: detected dubious ownership in repository
         git config --global --add safe.directory '*' &&
-        git status &&
         # if git diff-tree --no-commit-id --name-only -r ${{ github.sha }} |
         #   grep "^ci/build_iso.sh$\|^ci/embedded.ipxe$"
         if git diff --exit-code ${{ github.event.before }} ${{ github.sha }} \
@@ -89,6 +88,10 @@ jobs:
       with:
         name: latest-iso
         path: http
+        # The run-id of the workflow that builds the ISO
+        run-id: ${{ github.run_id }}
+        # A token to authenticate and download the artifact
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Upload static files as artifact
       id: deployment
       uses: actions/upload-pages-artifact@v4
