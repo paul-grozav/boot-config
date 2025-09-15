@@ -35,6 +35,7 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 (
   cd ${project_root}/ipxe/src &&
   make \
+    -j$(nproc) \
     DEBUG=dhcp,tftp,http \
     ` # This needs to be a relative path, as defined in Makefile ` \
     bin/ipxe.iso \
