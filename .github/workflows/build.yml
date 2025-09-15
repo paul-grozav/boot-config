@@ -63,7 +63,8 @@ jobs:
         # Make .iso
         make \
           DEBUG=dhcp,tftp,http \
-          ${script_dir}/ipxe/src/bin/ipxe.iso \
+          ` # This needs to be a relative path, as defined in Makefile ` \
+          bin/ipxe.iso \
           EMBED=${script_dir}/my_script.ipxe \
           &&
 
