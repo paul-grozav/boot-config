@@ -6,6 +6,9 @@ name: Build
 # Triggers the workflow on push to the 'main' branch
 on:
   push:
+    # paths:
+    # - 'ci/build.sh'
+    # - 'ci/embedded.ipxe'
     branches:
     - main
   # Allows you to run this workflow manually from the Actions tab
@@ -40,8 +43,30 @@ jobs:
       uses: actions/checkout@v4
     - name: Setup Pages
       uses: actions/configure-pages@v5
+    - name: Detect if build.sh has changed
+      id: changes
+      run: |
+        if git diff --exit-code ${{ github.event.before }} \
+          ${{ github.sha }} -- 'ci/build.sh'
+        then
+          echo "rebuild=false" >> $GITHUB_OUTPUT
+        else
+          echo "rebuild=true" >> $GITHUB_OUTPUT
+        fi
     - name: Build web app
-      run: sh ci/build.sh
+      if: steps.changes.outputs.rebuild == 'true'
+      run: sh ci/build_iso.sh
+    - name: Upload new ISO as an artifact
+      if: steps.changes.outputs.rebuild == 'true'
+      uses: actions/upload-artifact@v3
+      with:
+        name: latest-iso
+        path: ipxe/src/bin/ipxe.iso
+    - name: Download latest ISO artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: latest-iso
+        path: http
     - name: Upload static files as artifact
       id: deployment
       uses: actions/upload-pages-artifact@v3

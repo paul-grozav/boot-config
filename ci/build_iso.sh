@@ -33,14 +33,6 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 # Make all (default config)
 # make &&
 
-( cat - <<EOF
-#!ipxe
-echo Starting iPXE embeded script!
-ifstat
-dhcp
-shell
-EOF
-) > ${project_root}/my_script.ipxe
 
 # See: https://ipxe.org/appnote/buildtargets
 # Make .iso
@@ -50,7 +42,7 @@ EOF
     DEBUG=dhcp,tftp,http \
     ` # This needs to be a relative path, as defined in Makefile ` \
     bin/ipxe.iso \
-    EMBED=${project_root}/my_script.ipxe \
+    EMBED=${project_root}/ci/embedded.ipxe \
     &&
   true
 )
@@ -71,6 +63,6 @@ EOF
 # However, snponly has support for running autoexec.ipxe that gets
 # pulled from the TFTP server that offers the .efi binary.
 
-cp ${project_root}/ipxe/src/bin/ipxe.iso ${project_root}/http/ &&
+# cp ${project_root}/ipxe/src/bin/ipxe.iso ${project_root}/http/ &&
 exit 0
 # ============================================================================ #
