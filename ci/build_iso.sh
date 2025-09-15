@@ -17,8 +17,10 @@ sudo apt-get install -y \
   gcc \
   ` # libc-dev - Basic standard C library for ipxe ` \
   libc-dev \
-  ` # xz-dev - required by the ipxe project ` \
-  xz-dev \
+  ` # xz-dev - (Alpine) required by the ipxe project ` \
+  ` # xz-dev ` \
+  ` # liblzma-dev - (ubuntu) required by the ipxe project ` \
+  liblzma-dev \
   ` # syslinux - required to make the iso bootable ` \
   syslinux \
   ` # xorriso - to create the iso file ` \
