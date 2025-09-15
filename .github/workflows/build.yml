@@ -40,10 +40,10 @@ jobs:
       uses: actions/configure-pages@v5
     - name: Build web app
       run: |
+        set -x &&
         apk add git perl make gcc libc-dev xz-dev syslinux xorriso &&
         script_dir="$( cd $( dirname ${0} ) && pwd )" &&
         git clone https://github.com/ipxe/ipxe.git &&
-        cd ${script_dir}/ipxe/src &&
 
         # nano config/console.h # uncomment CONSOLE_SERIAL if you need it
 
@@ -61,12 +61,16 @@ jobs:
 
         # See: https://ipxe.org/appnote/buildtargets
         # Make .iso
-        make \
-          DEBUG=dhcp,tftp,http \
-          ` # This needs to be a relative path, as defined in Makefile ` \
-          bin/ipxe.iso \
-          EMBED=${script_dir}/my_script.ipxe \
-          &&
+        (
+          cd ${script_dir}/ipxe/src &&
+          make \
+            DEBUG=dhcp,tftp,http \
+            ` # This needs to be a relative path, as defined in Makefile ` \
+            bin/ipxe.iso \
+            EMBED=${script_dir}/my_script.ipxe \
+            &&
+          true
+        )
 
         # For HTTPS support:
         # apk add openssl openssl-dev &&
