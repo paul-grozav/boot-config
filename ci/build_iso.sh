@@ -6,7 +6,7 @@ set -x &&
 script_dir="$( cd $( dirname ${0} ) && pwd )" &&
 project_root="$( cd ${script_dir}/.. && pwd )" &&
 
-apt-get install -y \
+sudo apt-get install -y \
   ` # git - clone ipxe project ` \
   git \
   ` # perl - required for building ipxe ` \
