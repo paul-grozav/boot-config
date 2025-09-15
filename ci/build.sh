@@ -3,11 +3,13 @@
 # ============================================================================ #
 set -x &&
 script_dir="$( cd $( dirname ${0} ) && pwd )" &&
+project_root="$( cd ${script_dir}/.. && pwd )" &&
 
 apk add git perl make gcc libc-dev xz-dev syslinux xorriso &&
-pwd && ls -la &&
-git clone https://github.com/ipxe/ipxe.git &&
-pwd && ls -la && ls -la ipxe && ls -la ipxe/src &&
+pwd && ls -la ${project_root} &&
+git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
+pwd && ls -la ${project_root} && ls -la ${project_root}/ipxe &&
+ls -la ${project_root}/ipxe/src &&
 
 # nano config/console.h # uncomment CONSOLE_SERIAL if you need it
 
@@ -21,17 +23,17 @@ ifstat
 dhcp
 shell
 EOF
-) > ${script_dir}/my_script.ipxe
+) > ${project_root}/my_script.ipxe
 
 # See: https://ipxe.org/appnote/buildtargets
 # Make .iso
 (
-  cd ${script_dir}/ipxe/src &&
+  cd ${project_root}/ipxe/src &&
   make \
     DEBUG=dhcp,tftp,http \
     ` # This needs to be a relative path, as defined in Makefile ` \
     bin/ipxe.iso \
-    EMBED=${script_dir}/my_script.ipxe \
+    EMBED=${project_root}/my_script.ipxe \
     &&
   true
 )
@@ -52,6 +54,6 @@ EOF
 # However, snponly has support for running autoexec.ipxe that gets
 # pulled from the TFTP server that offers the .efi binary.
 
-cp ${script_dir}/ipxe/src/bin/ipxe.iso ${script_dir}/http/ &&
+cp ${project_root}/ipxe/src/bin/ipxe.iso ${project_root}/http/ &&
 exit 0
 # ============================================================================ #
