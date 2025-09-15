@@ -62,6 +62,6 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 # However, snponly has support for running autoexec.ipxe that gets
 # pulled from the TFTP server that offers the .efi binary.
 
-# cp ${project_root}/ipxe/src/bin/ipxe.iso ${project_root}/http/ &&
+cp ${project_root}/ipxe/src/bin/ipxe.iso ${project_root}/http/ &&
 exit 0
 # ============================================================================ #
