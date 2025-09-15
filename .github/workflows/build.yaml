@@ -43,7 +43,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         # Fetches the entire history for git diff - not a shallow clone
-        fetch-depth: 0
+        # fetch-depth: 0
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Install tools
@@ -59,12 +59,14 @@ jobs:
       run: |
         set -x &&
         pwd && ls -la &&
-        if git diff --exit-code --no-index ${{ github.event.before }} \
-          ${{ github.sha }} -- 'ci/build_iso.sh'
+        if git diff-tree --no-commit-id --name-only -r ${{ github.sha }} |
+          grep "^ci/build_iso.sh$\|^ci/embedded.ipxe$"
+        # if git diff --exit-code --no-index ${{ github.event.before }} \
+        #   ${{ github.sha }} -- 'ci/build_iso.sh'
         then
-          echo "rebuild=false" >> $GITHUB_OUTPUT
-        else
           echo "rebuild=true" >> $GITHUB_OUTPUT
+        else
+          echo "rebuild=false" >> $GITHUB_OUTPUT
         fi
     - name: Build web app
       if: steps.changes.outputs.rebuild == 'true'
