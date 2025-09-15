@@ -41,9 +41,12 @@ jobs:
     - name: Build web app
       run: |
         set -x &&
-        apk add git perl make gcc libc-dev xz-dev syslinux xorriso &&
         script_dir="$( cd $( dirname ${0} ) && pwd )" &&
+
+        apk add git perl make gcc libc-dev xz-dev syslinux xorriso &&
+        pwd && ls -la &&
         git clone https://github.com/ipxe/ipxe.git &&
+        pwd && ls -la && ls -la ipxe && ls -la ipxe/src &&
 
         # nano config/console.h # uncomment CONSOLE_SERIAL if you need it
 
