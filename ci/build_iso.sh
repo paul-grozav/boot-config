@@ -36,7 +36,12 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 # curl https://letsencrypt.org/certs/lets-encrypt-r3.pem \
 #  -o ${project_root}/le-r3.pem &&
 openssl s_client -connect paul-grozav.github.io:443 2>/dev/null 0</dev/null |
-  openssl x509 > ${project_root}/gh.pem
+  openssl x509 > ${project_root}/gh.pem &&
+
+# Enable HTTPS support in header source file
+sed -e $'s/^#undef\tDOWNLOAD_PROTO_HTTPS\t/#define\tDOWNLOAD_PROTO_HTTPS\t/g' \
+  -i ${project_root}/ipxe/src/config/general.h &&
+
 # Make .iso
 (
   DEBUG="dhcp" &&
