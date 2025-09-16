@@ -4,14 +4,20 @@
 # ============================================================================ #
 # This base_url variable value is inherited from parent script boot.ipxe
 echo base_url is: ${base_url}
+set home_url http://alice.home.server.paul.grozav.info
+echo home_url is: ${home_url}
 
-# Some menu defaults
+# ============================================================================ #
+# Some menu settings
+# ============================================================================ #
 # timeout in ms
 set menu_timeout 20000
 #set menu_timeout 1
 set submenu_timeout ${menu_timeout}
 set menu_default aleph_live
 
+# ============================================================================ #
+# The menu itself
 # ============================================================================ #
 
 :start
@@ -28,6 +34,8 @@ choose --timeout ${menu_timeout} --default ${menu_default} selected || goto canc
 set menu_timeout 0
 goto ${selected}
 
+# ============================================================================ #
+# Basic menu options
 # ============================================================================ #
 
 :cancel
@@ -50,13 +58,20 @@ goto start
 :exit
 exit
 
-###
-### Custom menu entries
-###
+# ============================================================================ #
+# Custom menu entries
+# ============================================================================ #
 :aleph_live
 kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl || goto start
 initrd https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.ird || goto start
 #imgargs memdisk iso raw || goto start
+boot || goto start
+goto start
+# ============================================================================ #
+:freedos
+kernel --timeout 5000 ${home_url}/bin/boot/syslinux/Intel_x86PC/memdisk || goto start
+initrd --timeout 5000 ${home_url}/bin/boot/FreeDOS/dosnethdd.img || goto start
+imgargs memdisk harddisk || goto start
 boot || goto start
 goto start
 # ============================================================================ #
