@@ -33,15 +33,24 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 
 # See: https://ipxe.org/appnote/buildtargets
 
-curl https://letsencrypt.org/certs/lets-encrypt-r3.pem \
-  -o ${project_root}/le-r3.pem &&
+# curl https://letsencrypt.org/certs/lets-encrypt-r3.pem \
+#  -o ${project_root}/le-r3.pem &&
+openssl s_client -connect paul-grozav.github.io:443 2>/dev/null 0</dev/null |
+  openssl x509 > ${project_root}/gh.pem
 # Make .iso
 (
+  DEBUG="dhcp" &&
+  DEBUG="${DEBUG},tftp" &&
+  DEBUG="${DEBUG},http" &&
+  # DEBUG="${DEBUG},tls" &&
+  # DEBUG="${DEBUG},x509:3" &&
+  # DEBUG="${DEBUG},certstore" &&
+  # DEBUG="${DEBUG},privkey" &&
   cd ${project_root}/ipxe/src &&
   make \
     -j$(nproc) \
-    DEBUG=dhcp,tftp,http,tls,x509:3,certstore,privkey \
-    TRUST=${project_root}/le-r3.pem \
+    DEBUG=${DEBUG} \
+    TRUST=${project_root}/gh.pem \
     EMBED=${project_root}/ci/embedded.ipxe \
     ` # This needs to be a relative path, as defined in Makefile ` \
     bin/ipxe.iso \
