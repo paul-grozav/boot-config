@@ -12,8 +12,9 @@ echo home_url is: ${home_url}
 # ============================================================================ #
 # timeout in ms
 set menu_timeout 20000
+# 1 makes it auto-boot very fast and 0 makes it wait for input, disabling
+# auto-boot
 #set menu_timeout 1
-set submenu_timeout ${menu_timeout}
 set menu_default aleph_live
 
 # ============================================================================ #
@@ -23,6 +24,7 @@ set menu_default aleph_live
 :start
 menu Central Boot Menu ${base_url} ${mac}
 # menu iPXE boot menu
+item            freedos        FreeDOS
 item            aleph_live     Aleph Live
 item --gap --                  ------------------------- Advanced options -------------------------------
 item --key s    shell          Drop to iPXE shell
@@ -44,8 +46,8 @@ echo You cancelled the menu, dropping you to a shell
 :shell
 echo Type 'exit' to get the back to the menu
 shell
-# set menu_timeout 0
-# set submenu_timeout 0
+# Disable auto-selection
+set menu_timeout 0
 goto start
 
 :reboot
