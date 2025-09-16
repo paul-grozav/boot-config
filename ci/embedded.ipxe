@@ -6,5 +6,5 @@ echo Starting the iPXE script that is embeded into the .iso ...
 ifstat
 dhcp
 # To do: retry chain
-chain http://paul-grozav.github.io/boot-config/boot.ipxe || shell
+chain https://paul-grozav.github.io/boot-config/boot.ipxe || shell
 # ============================================================================ #
