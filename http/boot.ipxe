@@ -2,6 +2,8 @@
 # ============================================================================ #
 # Author: Tancredi-Paul Grozav <paul@grozav.info>
 # ============================================================================ #
+# To boot this configuration, boot the ipxe.iso from the github actions artifact
+# ============================================================================ #
 # Predefined variables:
 # ${mac} -  08:00:27:6a:d5:df - MAC address of the card through which DHCP
 #           request was sent

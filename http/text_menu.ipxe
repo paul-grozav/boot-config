@@ -15,7 +15,7 @@ set menu_timeout 20000
 # 1 makes it auto-boot very fast and 0 makes it wait for input, disabling
 # auto-boot
 #set menu_timeout 1
-set menu_default aleph_live
+set menu_default freedos
 
 # ============================================================================ #
 # The menu itself
