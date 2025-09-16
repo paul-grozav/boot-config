@@ -2,8 +2,8 @@
 # ============================================================================ #
 # Author: Tancredi-Paul Grozav <paul@grozav.info>
 # ============================================================================ #
-echo root is: ${root}
-sleep 3
+# This base_url variable value is inherited from parent script boot.ipxe
+echo base_url is: ${base_url}
 
 # Some menu defaults
 # timeout in ms
@@ -15,7 +15,7 @@ set menu_default aleph_live
 # ============================================================================ #
 
 :start
-menu Boot Menu LAN - ${ip} - ${domain} - ${mac}
+menu Central Boot Menu - ${base_url} - ${mac} - ${ip}
 # menu iPXE boot menu
 item            aleph_live     Aleph Live
 item --gap --                  ------------------------- Advanced options -------------------------------
