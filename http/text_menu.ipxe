@@ -1,0 +1,61 @@
+#!ipxe
+# ============================================================================ #
+# Author: Tancredi-Paul Grozav <paul@grozav.info>
+# ============================================================================ #
+echo root is: ${root}
+
+# Some menu defaults
+# timeout in ms
+set menu_timeout 20000
+#set menu_timeout 1
+set submenu_timeout ${menu_timeout}
+set menu_default aleph_live
+
+# ============================================================================ #
+
+:start
+menu Boot Menu LAN - ${ip} - ${domain} - ${mac}
+# menu iPXE boot menu
+item            aleph_live     Aleph Live
+item --gap --                  ------------------------- Advanced options -------------------------------
+item --key s    shell          Drop to iPXE shell
+item --key r    reboot         Reboot
+item            config         Start interactive configuration tool
+item
+item --key x    exit           Exit iPXE and continue BIOS boot
+choose --timeout ${menu_timeout} --default ${menu_default} selected || goto cancel
+set menu_timeout 0
+goto ${selected}
+
+# ============================================================================ #
+
+:cancel
+echo You cancelled the menu, dropping you to a shell
+
+:shell
+echo Type 'exit' to get the back to the menu
+shell
+# set menu_timeout 0
+# set submenu_timeout 0
+goto start
+
+:reboot
+reboot
+
+:config
+config || goto start
+goto start
+
+:exit
+exit
+
+###
+### Custom menu entries
+###
+:aleph_live
+kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl || goto start
+initrd https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.ird || goto start
+#imgargs memdisk iso raw || goto start
+boot || goto start
+goto start
+# ============================================================================ #

@@ -2,6 +2,39 @@
 # ============================================================================ #
 # Author: Tancredi-Paul Grozav <paul@grozav.info>
 # ============================================================================ #
+# Predefined variables:
+# ${mac} -  08:00:27:6a:d5:df - MAC address of the card through which DHCP
+#           request was sent
+# ${hwaddr} - same as ${mac}
+# ${ip} - 192.168.0.196 - IP allocated by DHCP to this machine
+# ${domain} - home.server.paul.grozav.info - DHCP received domain name
+# ${next-server} - the TFTP server provided by the DHCP server
+# ============================================================================ #
+# Text mode menu - 80 characters wide, 3 chars border left and right, 74 usable
+# by menu.
+# ============================================================================ #
 echo Starting the entrypoint iPXE script from central server ...
-shell
+# ============================================================================ #
+echo BEGIN - Displaying network information ...
+echo hwaddr is: ${hwaddr}
+echo mac is: ${mac}
+echo ip is: ${ip}
+echo domain is: ${domain}
+echo next-server is: ${next-server}
+echo Interfaces ...
+ifstat
+echo Routing table ...
+route
+echo END - Displaying network information ...
+# ============================================================================ #
+set root=https://paul-grozav.github.io/boot-config
+
+echo Trying to boot my own configuration ...
+# OR nothing means that it's ok to fail, just continue if there is no custom
+# configuration file
+chain --autofree ${root}/ipxe/hwaddr/${hwaddr}/main.ipxe ||
+echo Continuing with a generic boot menu in 5 seconds ...
+sleep 5
+
+chain ${root}/text_menu.ipxe || shell
 # ============================================================================ #
