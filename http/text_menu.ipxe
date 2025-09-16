@@ -15,7 +15,7 @@ set menu_default aleph_live
 # ============================================================================ #
 
 :start
-menu Central Boot Menu - ${base_url} - ${mac} - ${ip}
+menu Central Boot Menu ${base_url} ${mac}
 # menu iPXE boot menu
 item            aleph_live     Aleph Live
 item --gap --                  ------------------------- Advanced options -------------------------------
