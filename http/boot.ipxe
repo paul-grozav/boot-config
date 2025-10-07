@@ -30,6 +30,7 @@ route
 echo END - Displaying network information ...
 # ============================================================================ #
 set base_url https://paul-grozav.github.io/boot-config
+#set base_url ${cwduri}/..
 
 echo Trying to boot my own configuration ...
 # OR nothing means that it's ok to fail, just continue if there is no custom
