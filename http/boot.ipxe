@@ -38,5 +38,5 @@ chain --autofree ${base_url}/ipxe/hwaddr/${hwaddr}/main.ipxe ||
 echo Continuing with a generic boot menu in 5 seconds ...
 sleep 5
 
-chain ${base_url}/text_menu.ipxe || shell
+chain ${base_url}/ipxe/text_menu.ipxe || shell
 # ============================================================================ #
