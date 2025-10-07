@@ -4,7 +4,10 @@
 # ============================================================================ #
 # This base_url variable value is inherited from parent script boot.ipxe
 echo base_url is: ${base_url}
-set home_url http://alice.home.server.paul.grozav.info
+# This URL works from inside and outside of home LAN - is always resolved to
+# public IP
+set home_url http://h313.go.ro
+#set home_url http://alice.home.server.paul.grozav.info
 echo home_url is: ${home_url}
 
 # ============================================================================ #
