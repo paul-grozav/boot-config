@@ -36,7 +36,7 @@ apk add --no-cache \
 
 git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe \
   ` # Last commit with known https support ` \
-  -b 49f700a25b771881e45b74ad560c909f3a860cb3 \
+  -b 4157afc125d84d54c23921392d64190e51424653 \
   &&
 
 # nano config/console.h # uncomment CONSOLE_SERIAL if you need it.
@@ -49,7 +49,8 @@ openssl s_client -connect paul-grozav.github.io:443 2>/dev/null 0</dev/null |
   openssl x509 > ${project_root}/gh.pem &&
 
 # Enable HTTPS support in header source file
-sed -e $'s/^#undef\tDOWNLOAD_PROTO_HTTPS\t/#define\tDOWNLOAD_PROTO_HTTPS\t/g' \
+sed -e \
+  $'s/^\/\/#define DOWNLOAD_PROTO_HTTPS\t/#define\tDOWNLOAD_PROTO_HTTPS\t/g' \
   -i ${project_root}/ipxe/src/config/general.h &&
 # grep DOWNLOAD_PROTO_HTTPS ${project_root}/ipxe/src/config/general.h &&
 # i think it's pre-enabled by default in newer versions
