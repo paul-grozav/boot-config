@@ -1,63 +1,63 @@
-# ============================================================================ #
-# Author: Tancredi-Paul Grozav <paul@grozav.info>
-# ============================================================================ #
-name: Optimized Build and Deploy
-on:
-  push:
-    branches:
-    - main
-    paths:
-    - '.github/workflows/**'
-    - 'http/**'
-    - 'iso/**'
+# # ============================================================================ #
+# # Author: Tancredi-Paul Grozav <paul@grozav.info>
+# # ============================================================================ #
+# name: Optimized Build and Deploy
+# on:
+#   push:
+#     branches:
+#     - main
+#     paths:
+#     - '.github/workflows/**'
+#     - 'http/**'
+#     - 'iso/**'
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      with:
-        # Need at least 2 commits to compare changes
-        fetch-depth: 2
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v4
+#       with:
+#         # Need at least 2 commits to compare changes
+#         fetch-depth: 2
 
-    # 1. Detect which folders changed
-    - name: Check for changes
-      id: filter
-      uses: dorny/paths-filter@v3
-      with:
-        filters: |
-          iso_changed:
-          - 'iso/**'
+#     # 1. Detect which folders changed
+#     - name: Check for changes
+#       id: filter
+#       uses: dorny/paths-filter@v3
+#       with:
+#         filters: |
+#           iso_changed:
+#           - 'iso/**'
 
-    # 2. Prepare the site folder
-    - name: Setup Website
-      run: |
-        mkdir -p _site
-        cp -r http/* _site/
+#     # 2. Prepare the site folder
+#     - name: Setup Website
+#       run: |
+#         mkdir -p _site
+#         cp -r http/* _site/
 
-    # 3. Conditional ISO Build (Only runs if iso/ folder changed)
-    - name: Build New ISO
-      if: steps.filter.outputs.iso_changed == 'true'
-      run: |
-        chmod +x iso/build.sh &&
-        ./iso/build.sh &&
-        mv ./http/ipxe.iso _site/ &&
-        ls -la _site
+#     # 3. Conditional ISO Build (Only runs if iso/ folder changed)
+#     - name: Build New ISO
+#       if: steps.filter.outputs.iso_changed == 'true'
+#       run: |
+#         chmod +x iso/build.sh &&
+#         ./iso/build.sh &&
+#         mv ./http/ipxe.iso _site/ &&
+#         ls -la _site
 
-    # 4. Pull existing ISO if we didn't build a new one
-    # This ensures 'installer.iso' is always available for the deploy step
-    - name: Use Existing ISO
-      if: steps.filter.outputs.iso_changed == 'false'
-      run: |
-        # Fetch the latest ISO from the live site branch so it's not lost
-        wget https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/ipxe.iso -O _site/ipxe.iso || ( echo "No existing ISO found" && false )
+#     # 4. Pull existing ISO if we didn't build a new one
+#     # This ensures 'installer.iso' is always available for the deploy step
+#     - name: Use Existing ISO
+#       if: steps.filter.outputs.iso_changed == 'false'
+#       run: |
+#         # Fetch the latest ISO from the live site branch so it's not lost
+#         wget https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/ipxe.iso -O _site/ipxe.iso || ( echo "No existing ISO found" && false )
 
-    - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: _site
-        branch: gh-pages
-# ============================================================================ #
+#     - name: Deploy to GitHub Pages
+#       uses: JamesIves/github-pages-deploy-action@v4
+#       with:
+#         folder: _site
+#         branch: gh-pages
+# # ============================================================================ #
