@@ -19,16 +19,15 @@ apk add --no-cache \
   libc-dev \
   binutils \
   musl-dev \
-  xz-dev \
   mtools \
   ` # get certificate from github ` \
   openssl \
   ca-certificates \
   libressl-dev \
   ` # xz-dev - (Alpine) required by the ipxe project ` \
-  ` # xz-dev ` \
+  xz-dev \
   ` # liblzma-dev - (ubuntu) (and isolinux) required by the ipxe project ` \
-  liblzma-dev isolinux \
+  ` # liblzma-dev isolinux ` \
   ` # syslinux - required to make the iso bootable ` \
   syslinux \
   ` # xorriso - to create the iso file ` \
