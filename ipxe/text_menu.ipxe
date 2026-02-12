@@ -1,0 +1,95 @@
+#!ipxe
+# ============================================================================ #
+# Author: Tancredi-Paul Grozav <paul@grozav.info>
+# ============================================================================ #
+# This base_url variable value is inherited from parent script boot.ipxe
+echo base_url is: ${base_url}
+# This URL works from inside and outside of home LAN - is always resolved to
+# public IP
+set home_url http://h313.go.ro
+#set home_url http://alice.home.server.paul.grozav.info
+echo home_url is: ${home_url}
+
+# ============================================================================ #
+# Some menu settings
+# ============================================================================ #
+# timeout in ms
+set menu_timeout 20000
+# 1 makes it auto-boot very fast and 0 makes it wait for input, disabling
+# auto-boot
+#set menu_timeout 1
+set menu_default freedos
+
+# ============================================================================ #
+# The menu itself
+# ============================================================================ #
+
+:start
+menu Central Boot Menu ${base_url} ${mac}
+# menu iPXE boot menu
+item            aleph_live      Aleph Live
+item            freedos         FreeDOS
+item            tinycorelinux   Tiny Core Linux (Current)
+item            home_menu       Home 313 menu
+item --gap --                   ------------------------- Advanced options -------------------------------
+item --key s    shell           Drop to iPXE shell
+item --key r    reboot          Reboot
+item            config          Start interactive configuration tool
+item
+item --key x    exit            Exit iPXE and continue BIOS boot
+choose --timeout ${menu_timeout} --default ${menu_default} selected || goto cancel
+set menu_timeout 0
+goto ${selected}
+
+# ============================================================================ #
+# Basic menu options
+# ============================================================================ #
+
+:cancel
+echo You cancelled the menu, dropping you to a shell
+
+:shell
+echo Type 'exit' to get the back to the menu
+shell
+# Disable auto-selection
+set menu_timeout 0
+goto start
+
+:reboot
+reboot
+
+:config
+config || goto start
+goto start
+
+:exit
+exit
+
+# ============================================================================ #
+# Custom menu entries
+# ============================================================================ #
+:aleph_live
+kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl || goto start
+initrd https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.ird || goto start
+#imgargs memdisk iso raw || goto start
+boot || goto start
+goto start
+# ============================================================================ #
+:freedos
+kernel --timeout 5000 ${home_url}/bin/boot/syslinux/Intel_x86PC/memdisk || goto start
+initrd --timeout 5000 ${home_url}/bin/boot/FreeDOS/dosnethdd.img || goto start
+imgargs memdisk harddisk || goto start
+boot || goto start
+goto start
+# ============================================================================ #
+:tinycorelinux
+# Nice because it uses <100 MiB of RAM, with GUI/X running and the iso is ~20MiB
+kernel --timeout 5000 ${home_url}/bin/boot/syslinux/Intel_x86PC/memdisk || goto start
+initrd --timeout 5000 http://tinycorelinux.net/16.x/x86/release/TinyCore-current.iso || goto start
+boot || goto start
+goto start
+# ============================================================================ #
+:home_menu
+chain ${home_url}/boot/ipxe.ipxe || goto start
+goto start
+# ============================================================================ #
