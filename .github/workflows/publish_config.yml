@@ -77,7 +77,8 @@ jobs:
       run: |
         pwd && ls -la && ls -la iso &&
         chmod +x iso/build.sh &&
-        iso/build.sh
+        whoami &&
+        bash iso/build.sh
 
     # 4. Pull existing ISO if we didn't build a new one
     # This ensures 'installer.iso' is always available for the deploy step
