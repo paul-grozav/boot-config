@@ -80,7 +80,7 @@ sed -e $'s/^#undef\tDOWNLOAD_PROTO_HTTPS\t/#define\tDOWNLOAD_PROTO_HTTPS\t/g' \
 # However, snponly has support for running autoexec.ipxe that gets
 # pulled from the TFTP server that offers the .efi binary.
 
-cp ${project_root}/ipxe/src/bin/ipxe.lkrn ${project_root}/http/ &&
+# cp ${project_root}/ipxe/src/bin/ipxe.lkrn ${project_root}/http/ &&
 cp ${project_root}/ipxe/src/bin/ipxe.iso ${project_root}/http/ &&
 exit 0
 # ============================================================================ #

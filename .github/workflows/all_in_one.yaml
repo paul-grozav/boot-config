@@ -44,7 +44,8 @@ jobs:
       run: |
         chmod +x iso/build.sh &&
         ./iso/build.sh &&
-        mv ./http/ipxe.iso _site/
+        mv ./http/ipxe.iso _site/ &&
+        ls -la _site
 
     # 4. Pull existing ISO if we didn't build a new one
     # This ensures 'installer.iso' is always available for the deploy step
