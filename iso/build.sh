@@ -56,7 +56,7 @@ sed -e $'s/^#undef\tDOWNLOAD_PROTO_HTTPS\t/#define\tDOWNLOAD_PROTO_HTTPS\t/g' \
     -j$(nproc) \
     DEBUG=${DEBUG} \
     TRUST=${project_root}/gh.pem \
-    EMBED=${project_root}/ci/embedded.ipxe \
+    EMBED=${project_root}/iso/embedded.ipxe \
     ` # This needs to be a relative path, as defined in Makefile ` \
     bin/ipxe.iso \
     &&
