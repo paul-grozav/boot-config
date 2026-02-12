@@ -75,8 +75,9 @@ jobs:
     - name: Build New ISO
       if: steps.filter.outputs.iso_changed == 'true'
       run: |
+        pwd && ls -la &&
         chmod +x iso/build.sh &&
-        ./iso/build.sh
+        iso/build.sh
 
     # 4. Pull existing ISO if we didn't build a new one
     # This ensures 'installer.iso' is always available for the deploy step
