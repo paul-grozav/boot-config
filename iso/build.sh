@@ -34,10 +34,12 @@ apk add --no-cache \
   xorriso \
   &&
 
-git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe \
-  ` # Last commit with known https support ` \
-  -b 4157afc125d84d54c23921392d64190e51424653 \
-  &&
+git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
+(
+  cd ${project_root}/ipxe/src &&
+  # Last commit with known https support
+  git checkout 4157afc125d84d54c23921392d64190e51424653
+) &&
 
 # nano config/console.h # uncomment CONSOLE_SERIAL if you need it.
 
