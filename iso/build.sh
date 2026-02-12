@@ -22,6 +22,7 @@ apk add --no-cache \
   mtools \
   ` # get certificate from github ` \
   openssl \
+  openssl-dev \
   ca-certificates \
   libressl-dev \
   ` # xz-dev - (Alpine) required by the ipxe project ` \
