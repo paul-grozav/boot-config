@@ -57,7 +57,11 @@ jobs:
       with:
         # Need at least 2 commits to compare changes
         fetch-depth: 2
-  
+
+        # Add this step to fix the "dubious ownership" error
+      - name: Trust Workspace
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
     # Detect which folders changed
     - name: Check for changes
       id: filter
