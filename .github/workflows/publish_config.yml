@@ -48,6 +48,8 @@ jobs:
         apk add --no-cache \
           ` # tar - to create the artifact ` \
           tar \
+          ` # To check changes in prev commit(s) ` \
+          git \
           &&
         true
     - name: Checkout
