@@ -46,9 +46,10 @@ openssl s_client -connect paul-grozav.github.io:443 2>/dev/null 0</dev/null |
   openssl x509 > ${project_root}/gh.pem &&
 
 # Enable HTTPS support in header source file
-sed -e $'s/^#undef\tDOWNLOAD_PROTO_HTTPS\t/#define\tDOWNLOAD_PROTO_HTTPS\t/g' \
-  -i ${project_root}/ipxe/src/config/general.h &&
-grep DOWNLOAD_PROTO_HTTPS ${project_root}/ipxe/src/config/general.h &&
+# sed -e $'s/^#undef\tDOWNLOAD_PROTO_HTTPS\t/#define\tDOWNLOAD_PROTO_HTTPS\t/g' \
+#   -i ${project_root}/ipxe/src/config/general.h &&
+# grep DOWNLOAD_PROTO_HTTPS ${project_root}/ipxe/src/config/general.h &&
+# i think it's pre-enabled by default in newer versions
 
 # Make .iso
 (
