@@ -24,7 +24,6 @@ apk add --no-cache \
   openssl \
   openssl-dev \
   ca-certificates \
-  libressl-dev \
   ` # xz-dev - (Alpine) required by the ipxe project ` \
   xz-dev \
   ` # liblzma-dev - (ubuntu) (and isolinux) required by the ipxe project ` \
