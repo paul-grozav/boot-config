@@ -75,7 +75,7 @@ jobs:
     - name: Build New ISO
       if: steps.filter.outputs.iso_changed == 'true'
       run: |
-        pwd && ls -la &&
+        pwd && ls -la && ls -la iso &&
         chmod +x iso/build.sh &&
         iso/build.sh
 
