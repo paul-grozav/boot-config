@@ -6,9 +6,9 @@ set -x &&
 script_dir="$( cd $( dirname ${0} ) && pwd )" &&
 project_root="$( cd ${script_dir}/.. && pwd )" &&
 
-sudo apt-get install -y \
+apk add --no-cache \
   ` # git - clone ipxe project ` \
-  ` # git ` \
+  git \
   ` # perl - required for building ipxe ` \
   perl \
   ` # make - Build system for the ipxe project ` \
@@ -17,6 +17,14 @@ sudo apt-get install -y \
   gcc \
   ` # libc-dev - Basic standard C library for ipxe ` \
   libc-dev \
+  binutils \
+  musl-dev \
+  xz-dev \
+  mtools \
+  ` # get certificate from github ` \
+  openssl \
+  ca-certificates \
+  libressl-dev \
   ` # xz-dev - (Alpine) required by the ipxe project ` \
   ` # xz-dev ` \
   ` # liblzma-dev - (ubuntu) (and isolinux) required by the ipxe project ` \
