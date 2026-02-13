@@ -3,6 +3,7 @@
 # Author: Tancredi-Paul Grozav <paul@grozav.info>
 # ============================================================================ #
 # curl -s https://paul-grozav.github.io/boot-config/boot.sh | sh
+# curl -s https://paul-grozav.github.io/boot-config/boot.sh | sh -s -- --gui
 # ============================================================================ #
 set -x &&
 iso_file="$(mktemp)" &&
