@@ -15,9 +15,18 @@ curl \
   &&
 
 echo "Booting ..." &&
+params="-serial stdio" &&
+params="${params} -display none" &&
+params="${params} -machine graphics=off" &&
+if [ "${1}" = "--gui" ]
+then
+  params=""
+fi &&
+
 ( qemu-system-x86_64 \
   -m 2G \
   -cdrom ${iso_file} \
+  ${params} \
   || true ) &&
 
 rm -f ${iso_file} &&
