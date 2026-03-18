@@ -6,7 +6,7 @@
 echo base_url is: ${base_url}
 # This URL works from inside and outside of home LAN - is always resolved to
 # public IP
-set home_url http://h313.go.ro
+set home_url http://h313.go.ro:1027
 #set home_url http://alice.home.server.paul.grozav.info
 echo home_url is: ${home_url}
 
