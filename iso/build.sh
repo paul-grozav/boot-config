@@ -47,6 +47,7 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 
 # curl https://letsencrypt.org/certs/lets-encrypt-r3.pem \
 #  -o ${project_root}/le-r3.pem &&
+# dummy flag when cert renews: 0
 openssl s_client -connect paul-grozav.github.io:443 2>/dev/null 0</dev/null |
   openssl x509 > ${project_root}/gh.pem &&
 
