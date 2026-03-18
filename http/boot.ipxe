@@ -29,7 +29,8 @@ echo Routing table ...
 route
 echo END - Displaying network information ...
 # ============================================================================ #
-#set base_url https://paul-grozav.github.io/boot-config
+set base_url https://paul-grozav.github.io/boot-config
+# Not available in default QEMU ipxe builds
 set base_url ${cwduri}
 
 echo Trying to boot my own configuration ...
