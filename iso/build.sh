@@ -55,13 +55,17 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
   # *.github.io, issued by following root CA cert:
   # openssl s_client -connect paul-grozav.github.io:443 | openssl x509 &&
   # Let's Encrypt, CN = R12
-  curl -s https://letsencrypt.org/certs/2024/r12.pem &&
+  # curl -s https://letsencrypt.org/certs/2024/r12.pem &&
+  curl -s https://letsencrypt.org/certs/isrgrootx1.pem &&
+  curl -s https://letsencrypt.org/certs/isrg-root-x2.pem &&
 
   # *.gitlab.io cert (renewed every 3 months) issued by this root CA cert:
   curl -s https://secure.globalsign.com/cacert/root-r3.crt |
     openssl x509 -inform DER -outform PEM &&
   true
-) 2>/dev/null 0</dev/null 1>${project_root}/gh.pem &&
+) 2>/dev/null 0</dev/null 1>${project_root}/CAs.pem &&
+
+cat ${project_root}/CAs.pem &&
 
 # Enable HTTPS support in header source file
 # sed -e \
@@ -91,7 +95,7 @@ EOF
   make \
     -j$(nproc) \
     DEBUG=${DEBUG} \
-    TRUST=${project_root}/gh.pem \
+    TRUST=${project_root}/CAs.pem \
     EMBED=${project_root}/iso/embedded.ipxe \
     ` # This needs to be a relative path, as defined in Makefile ` \
     bin/ipxe.iso \
