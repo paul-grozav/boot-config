@@ -49,6 +49,7 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 #  -o ${project_root}/le-r3.pem &&
 # dummy flag when cert renews: 0
 (
+  set -x &&
   # List of trusted websited to download boot images from
   # *.github.io, issued by:
   openssl s_client -connect paul-grozav.github.io:443 | openssl x509 &&
@@ -98,7 +99,7 @@ EOF
     &&
   # mkdir -p ./bin && touch ./bin/ipxe.iso &&
   true
-)
+) &&
 
 # For HTTPS support:
 # apk add openssl openssl-dev &&
