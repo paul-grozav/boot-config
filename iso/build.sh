@@ -50,8 +50,16 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 # dummy flag when cert renews: 0
 (
   # List of trusted websited to download boot images from
-  openssl s_client -connect tancredi-paul-grozav.gitlab.io:443 | openssl x509 &&
+  # *.github.io, issued by:
   openssl s_client -connect paul-grozav.github.io:443 | openssl x509 &&
+  # Let's Encrypt, CN = R12
+  curl -s https://letsencrypt.org/certs/2024/r12.pem &&
+
+  # *.gitlab.io cert (renewed every 3 months) issued by the next one:
+  openssl s_client -connect tancredi-paul-grozav.gitlab.io:443 | openssl x509 &&
+  # GlobalSign GCC R6 AlphaSSL CA 2025 - issued the gitlab cert above,expires 2y
+  curl -s https://secure.globalsign.com/cacert/gsgccr6alphasslca2025.crt |
+    openssl x509 -inform DER -outform PEM &&
   true
 ) 2>/dev/null 0</dev/null 1>${project_root}/gh.pem &&
 
