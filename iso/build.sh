@@ -62,8 +62,8 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
   # *.gitlab.io cert (renewed every 3 months) issued by this root CA cert:
   curl -s http://secure.globalsign.com/cacert/gsgccr6alphasslca2025.crt |
     openssl x509 -inform DER -outform PEM &&
-  curl -s https://secure.globalsign.com/cacert/root-r3.crt |
-    openssl x509 -inform DER -outform PEM &&
+  # curl -s https://secure.globalsign.com/cacert/root-r3.crt |
+  #   openssl x509 -inform DER -outform PEM &&
   true
 ) 2>/dev/null 0</dev/null 1>${project_root}/CAs.pem &&
 
