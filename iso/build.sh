@@ -97,7 +97,7 @@ EOF
   make \
     -j$(nproc) \
     DEBUG=${DEBUG} \
-    TRUST=${project_root}/CAs.pem \
+    ` # TRUST=${project_root}/CAs.pem ` \
     EMBED=${project_root}/iso/embedded.ipxe \
     ` # This needs to be a relative path, as defined in Makefile ` \
     bin/ipxe.iso \
