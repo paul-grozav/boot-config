@@ -32,6 +32,8 @@ apk add --no-cache \
   syslinux \
   ` # xorriso - to create the iso file ` \
   xorriso \
+  ` # curl - to download certificates ` \
+  curl \
   &&
 
 git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
