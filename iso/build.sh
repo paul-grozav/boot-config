@@ -50,8 +50,8 @@ git clone https://github.com/ipxe/ipxe.git ${project_root}/ipxe &&
 # dummy flag when cert renews: 0
 (
   # List of trusted websited to download boot images from
-  openssl s_client -connect paul-grozav.github.io:443 | openssl x509 &&
   openssl s_client -connect tancredi-paul-grozav.gitlab.io:443 | openssl x509 &&
+  openssl s_client -connect paul-grozav.github.io:443 | openssl x509 &&
   true
 ) 2>/dev/null 0</dev/null 1>${project_root}/gh.pem &&
 
