@@ -83,7 +83,7 @@ exit
 set retry_count
 
 :download_kernel
-kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl && goto init_initrd ||
+kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl customKey=TediValue && goto init_initrd ||
 # Append an 'x' to the string on failure
 set retry_count ${retry_count}x
 # If tried 5 times (5 'x' characters)
@@ -107,6 +107,7 @@ goto download_initrd
 
 :do_boot
 # imgargs memdisk iso raw || goto start
+imgargs aleph.krnl ifname=eth1:${mac} ip=:::::eth1:dhcp nomodeset console=ttyS0 console=tty0 boot=pxe maxTryCount=10 config_srv_url=http://192.168.10.2/aleph_config rooturl=http://192.168.10.2/aleph.sfs || goto start
 boot || goto start
 goto start
 # ============================================================================ #
