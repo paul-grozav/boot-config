@@ -83,7 +83,7 @@ exit
 set retry_count
 
 :download_kernel
-kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl customKey=TediValue && goto init_initrd ||
+kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl && goto init_initrd ||
 # Append an 'x' to the string on failure
 set retry_count ${retry_count}x
 # If tried 5 times (5 'x' characters)
