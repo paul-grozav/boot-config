@@ -32,7 +32,7 @@ goto download_initrd
 
 :do_boot
 # imgargs memdisk iso raw || goto start
-imgargs aleph.krnl ifname=ens3:${mac} ip=:::::ens3:dhcp nomodeset console=ttyS0 console=tty0 boot=pxe maxTryCount=10 config_srv_url=${base_url}/ipxe/hwaddr/${hwaddr}/ rooturl=${base_url}/ipxe/hwaddr/${hwaddr}/aleph.sfs || goto start
+imgargs aleph.krnl ifname=ens3:${mac} ip=:::::ens3:dhcp nomodeset console=ttyS0 console=tty0 boot=pxe maxTryCount=10 config_srv_url=${base_url}/ipxe/hwaddr/${hwaddr}/ rooturl=https://paul-grozav.github.io/aleph/distribution_content/aleph.sfs || goto start
 boot || goto start
 goto start
 # shell
