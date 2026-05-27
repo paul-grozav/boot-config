@@ -73,9 +73,36 @@ exit
 # Custom menu entries
 # ============================================================================ #
 :aleph_live
-kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl || goto start
-initrd https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.ird || goto start
-#imgargs memdisk iso raw || goto start
+# kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl || goto start
+# initrd https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.ird || goto start
+# #imgargs memdisk iso raw || goto start
+# boot || goto start
+# goto start
+# Initialize retry counter for the kernel
+set retry_count 0
+
+:download_kernel
+kernel https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.krnl && goto init_initrd ||
+inc retry_count
+iseq ${retry_count} 5 && goto start ||
+echo Kernel download failed. Retrying (${retry_count}/5)...
+sleep 1
+goto download_kernel
+
+:init_initrd
+# Reset retry counter for the initrd
+set retry_count 0
+
+:download_initrd
+initrd https://tancredi-paul-grozav.gitlab.io/aleph/distribution_content/aleph.ird && goto do_boot ||
+inc retry_count
+iseq ${retry_count} 5 && goto start ||
+echo Initrd download failed. Retrying (${retry_count}/5)...
+sleep 1
+goto download_initrd
+
+:do_boot
+# imgargs memdisk iso raw || goto start
 boot || goto start
 goto start
 # ============================================================================ #
