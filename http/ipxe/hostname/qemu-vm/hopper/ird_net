@@ -1,0 +1,2 @@
+# This script is loaded by IRD as soon as the network is up(configured).
+echo "HOPPER" > /dev/kernel
