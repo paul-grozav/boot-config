@@ -87,12 +87,13 @@ EOF
 # Make .iso
 (
   DEBUG="dhcp" &&
-  DEBUG="${DEBUG},tftp" &&
-  DEBUG="${DEBUG},http" &&
-  DEBUG="${DEBUG},tls" &&
-  DEBUG="${DEBUG},x509:3" &&
-  DEBUG="${DEBUG},certstore" &&
-  DEBUG="${DEBUG},privkey" &&
+  # DEBUG="${DEBUG},tftp" &&
+  # DEBUG="${DEBUG},http" &&
+  DEBUG="${DEBUG},httpcore" &&
+  # DEBUG="${DEBUG},tls" &&
+  # DEBUG="${DEBUG},x509:3" &&
+  # DEBUG="${DEBUG},certstore" &&
+  # DEBUG="${DEBUG},privkey" &&
   cd ${project_root}/ipxe/src &&
   make \
     -j$(nproc) \
