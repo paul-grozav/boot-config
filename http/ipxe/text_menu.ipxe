@@ -107,7 +107,7 @@ goto download_initrd
 
 :do_boot
 # imgargs memdisk iso raw || goto start
-imgargs aleph.krnl ifname=enp0s8:${mac} ip=:::::enp0s8:dhcp nomodeset console=ttyS0 console=tty0 boot=pxe maxTryCount=10 config_srv_url=${base_url}/ipxe/hwaddr/${hwaddr}/ rooturl=${base_url}/ipxe/hwaddr/${hwaddr}/aleph.sfs || goto start
+imgargs aleph.krnl ifname=eth1:${mac} ip=:::::enp0s8:dhcp nomodeset console=ttyS0 console=tty0 boot=pxe maxTryCount=10 config_srv_url=${base_url}/ipxe/hwaddr/${hwaddr}/ rooturl=${base_url}/ipxe/hwaddr/${hwaddr}/aleph.sfs || goto start
 boot || goto start
 goto start
 # ============================================================================ #
