@@ -4,5 +4,24 @@
 # ============================================================================ #
 # This script is loaded by IRD as soon as the network is up(configured).
 # ============================================================================ #
-echo "HOPPER BOOTED" > /dev/kmsg
+echo "HOPPER BOOTED" > /dev/kmsg &&
+apt-get install -y \
+  ` # wireguard - not working with kernel modules version missmatch ` \
+  wireguard-go \
+  ` # mkfs.ext4 to format the persistent HDD ` \
+  e2fsprogs \
+  &&
+# modprobe wireguard &&
+
+echo mkfs.ext4 /dev/sda &&
+mkdir -p /data &&
+mount /dev/sda /data &&
+
+cp /data/wg0.conf /etc/wireguard/wg0.conf &&
+wg-quick up wg0 &&
+
+# wget https://github.com/k3s-io/k3s/releases/download/v1.36.1%2Bk3s1/k3s \
+#   -O /root/k3s &&
+
+true
 # ============================================================================ #
