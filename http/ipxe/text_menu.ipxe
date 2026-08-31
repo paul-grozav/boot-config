@@ -27,18 +27,19 @@ set menu_default freedos
 :start
 menu Central Boot Menu ${base_url} ${mac}
 # menu iPXE boot menu
-item            aleph_live      Aleph Live
-item            msdos           MS-DOS
-item            freedos         FreeDOS
-item            tinycorelinux   Tiny Core Linux (Current)
-item            home_menu       Home 313 menu
-item --gap --                   ------------------------- Advanced options -------------------------------
-item --key s    shell           Drop to iPXE shell
-item --key r    reboot          Reboot
-item --key p    power_off       Power off
-item            config          Start interactive configuration tool
+item            aleph_live       Aleph Live
+item            msdos            MS-DOS
+item            freedos          FreeDOS
+item            windows_10_xpe   Windows 10 XPE
+item            tinycorelinux    Tiny Core Linux (Current)
+item            home_menu        Home 313 menu
+item --gap --                    ------------------------- Advanced options -------------------------------
+item --key s    shell            Drop to iPXE shell
+item --key r    reboot           Reboot
+item --key p    power_off        Power off
+item            config           Start interactive configuration tool
 item
-item --key x    exit            Exit iPXE and continue BIOS boot
+item --key x    exit             Exit iPXE and continue BIOS boot
 choose --timeout ${menu_timeout} --default ${menu_default} selected || goto cancel
 set menu_timeout 0
 goto ${selected}
@@ -123,6 +124,15 @@ goto start
 kernel --timeout 5000 ${home_url}/bin/boot/syslinux/Intel_x86PC/memdisk || goto start
 initrd --timeout 5000 ${home_url}/bin/boot/FreeDOS/dosnethdd.img || goto start
 imgargs memdisk harddisk || goto start
+boot || goto start
+goto start
+# ============================================================================ #
+:windows_10_xpe
+kernel --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/wimboot || goto start
+initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/bcd || goto start
+initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/boot.sdi || goto start
+initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/boot.wim || goto start
+# imgargs memdisk harddisk || goto start
 boot || goto start
 goto start
 # ============================================================================ #
