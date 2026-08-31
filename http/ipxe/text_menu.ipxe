@@ -129,9 +129,14 @@ goto start
 # ============================================================================ #
 :windows_10_xpe
 kernel --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/wimboot || goto start
-initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/bcd || goto start
-initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/boot.sdi || goto start
-initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/boot.wim || goto start
+# Note how we specify the filename alias after each initrd file loaded.
+# When downloading files individually in iPXE, wimboot relies on iPXE giving
+# each initrd file an explicit target filename alias (e.g., initrd .../bcd BCD).
+# Without the trailing alias, iPXE wraps the files in a CPIO archive structure
+# that wimboot fails to unpack.
+initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/bcd BCD || goto start
+initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/boot.sdi boot.sdi || goto start
+initrd --timeout 5000 ${home_url}/bin/boot/windows/win10xpe/boot.wim boot.wim || goto start
 # imgargs memdisk harddisk || goto start
 boot || goto start
 goto start
