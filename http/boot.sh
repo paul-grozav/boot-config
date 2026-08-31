@@ -25,8 +25,15 @@ then
 fi &&
 
 ( qemu-system-x86_64 \
+  ` # CPU cores for the machine ` \
+  -smp 1 \
+  ` # Set RAM memory to 2GiB` \
   -m 2G \
+  ` # Mount iso as CD-ROM file` \
   -cdrom ${iso_file} \
+  ` # Network interface/card that even MSDOS can support ` \
+  -net nic,model=ne2k_isa \
+  -net user \
   ${params} \
   || true ) &&
 
